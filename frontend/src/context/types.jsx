@@ -1,0 +1,5 @@
+export const GET_ATHLETES = "GET_ATHLETES";
+export const GET_ATHLETE = "GET_ATHLETE"
+export const ADD_ATHLETE = "ADD_ATHLETE";
+export const UPDATE_ATHLETE = "UPDATE_ATHLETE";
+export const DELETE_ATHLETE = "DELETE_ATHLETE";

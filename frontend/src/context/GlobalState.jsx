@@ -5,18 +5,19 @@ import UrheilijaContext from "./UrheilijaContext";
 import { GET_ATHLETES } from "./types";
 import axios from "axios";
 
+const API = "http://localhost:3001/urheilijat";
+
 const GlobalState = (props) => {
-  let initialState = {
+  const initialState = {
     athletes: [],
+    athlete: null,
   };
 
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   const getAthletes = async () => {
     try {
-      let res = await axios.get("http://localhost:3001/urheilijat");
-      let { data } = res;
-
+      const { data } = await axios.get(API);
       dispatch({ type: GET_ATHLETES, payload: data });
     } catch (error) {
       console.error(error);
@@ -25,13 +26,9 @@ const GlobalState = (props) => {
 
   const getAthlete = async (id) => {
     try {
-      let sql = "http://localhost:3001/urheilijat/" + id;
-      let res = await axios.get(sql);
-
-      console.log("GET_ATHLETE:");
-
-      dispatch({ type: "GET_ATHLETE", payload: res.data });
-      return res.data;
+      const { data } = await axios.get(`${API}/${id}`);
+      dispatch({ type: "GET_ATHLETE", payload: data });
+      return data;
     } catch (error) {
       console.error(error);
     }
@@ -39,12 +36,8 @@ const GlobalState = (props) => {
 
   const addAthlete = async (uusiUrheilija) => {
     try {
-      await axios
-        .post(`http://localhost:3001/lisaa`, uusiUrheilija)
-        .then((res) => {
-          dispatch({ type: "ADD_ATHLETE", payload: res.data });
-          console.log(res.data);
-        });
+      const { data } = await axios.post(API, uusiUrheilija);
+      dispatch({ type: "ADD_ATHLETE", payload: data });
     } catch (error) {
       console.error(error);
     }
@@ -52,12 +45,8 @@ const GlobalState = (props) => {
 
   const setAthlete = async (id, paivitettyUrheilija) => {
     try {
-      await axios
-        .put(`http://localhost:3001/urheilijat/${id}`, paivitettyUrheilija)
-        .then((res) => {
-          dispatch({ type: "EDIT_ATHLETE", payload: res.data });
-          console.log(res.data);
-        });
+      const { data } = await axios.put(`${API}/${id}`, paivitettyUrheilija);
+      dispatch({ type: "EDIT_ATHLETE", payload: data });
     } catch (error) {
       console.error(error);
     }
@@ -65,11 +54,8 @@ const GlobalState = (props) => {
 
   const deleteAthlete = async (id) => {
     try {
-      let sql = "http://localhost:3001/urheilijat/" + id["id"];
-      await axios.delete(sql).then((res) => {
-        dispatch({ type: "DELETE_ATHLETE", payload: res.data });
-        console.log(res.data);
-      });
+      await axios.delete(`${API}/${id}`);
+      dispatch({ type: "DELETE_ATHLETE", payload: id });
     } catch (error) {
       console.error(error);
     }
@@ -79,17 +65,19 @@ const GlobalState = (props) => {
     <UrheilijaContext.Provider
       value={{
         athletes: state.athletes,
+        athlete: state.athlete,
         getAthletes,
+        getAthlete,
         addAthlete,
         setAthlete,
         deleteAthlete,
-        getAthlete,
       }}
     >
       {props.children}
     </UrheilijaContext.Provider>
   );
 };
+
 GlobalState.propTypes = {
   children: PropTypes.node.isRequired,
 };

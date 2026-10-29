@@ -4,18 +4,24 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/Navbar";
 import GlobalState from "./context/GlobalState";
+import UrheilijaLomake from "./components/UrheilijaLomake";
+import UrheilijaLista from "./components/UrheilijaLista";
 
 function App() {
   return (
-    <>
-      <GlobalState>
-        <BrowserRouter>
-          <Navbar />
-          <div className="container pb-4"></div>
-          <Routes></Routes>
-        </BrowserRouter>
-      </GlobalState>
-    </>
+    <GlobalState>
+      <BrowserRouter>
+        <Navbar />
+
+        <div className="container pb-4">
+          <Routes>
+            <Route path="/" element={<UrheilijaLista />} />
+            <Route path="/lisaa" element={<UrheilijaLomake />} />
+            <Route path="/muokkaa/:id" element={<UrheilijaLomake />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </GlobalState>
   );
 }
 

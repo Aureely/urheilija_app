@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import GlobalState from "./context/GlobalState";
 import UrheilijaLomake from "./components/UrheilijaLomake";
 import UrheilijaLista from "./components/UrheilijaLista";
+import UrheilijaMuokkaus from "./components/UrheilijaMuokkaus"
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<UrheilijaLista />} />
             <Route path="/lisaa" element={<UrheilijaLomake />} />
-            <Route path="/muokkaa/:id" element={<UrheilijaLomake />} />
+            <Route path="/muokkaa/:id" element={<UrheilijaMuokkaus />} />
           </Routes>
         </div>
       </BrowserRouter>

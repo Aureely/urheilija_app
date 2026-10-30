@@ -29,9 +29,9 @@ const Urheilijatieto = ({ urheilija }) => {
           {etunimi} {sukunimi}{" "}
           <button
             className="btn btn-outline-secondary btn-sm"
-            onClick={onShowClick}
+            onClick={onShowClick} 
           >
-            {naytaTiedot ? "▲" : "▼"}
+            {naytaTiedot ? "Piilota tiedot" : "Näytä tiedot"}
           </button>
         </h4>
 
